@@ -8,6 +8,7 @@
 ###########################################################################
 ###########################################################################
 
+
 ### ode functions take three arguments:
 # '@param t vector of time  points
 # '@param state vector of state variables
@@ -29,7 +30,7 @@
 
 exp_decay_ode <-function(t, state, parameters) {
   with(as.list(c(state, parameters)),{
-    dx <-  z * x 
+    dx <- - z * x 
     list(c(dx))
   })
 }
@@ -73,3 +74,60 @@ seir_ode <-function(t, state, parameters) {
     list(c(dS, dE, dI, dR))
   })
 }
+
+###########################################################################
+### Logistic growth with threshold 
+###########################################################################
+### parameters to be defined in `parameters`
+# z = natural mortality
+
+# r = growth rate
+
+# k = constant of proportionality
+
+### state variables to be defined in `state`
+# x individuals left alive
+
+
+log_growth_carry_cap_ode <-function(t, state, parameters) {
+  with(as.list(c(state, parameters)),{
+    dx <- - z * x + (r * x)^2 - (k * x)^3
+    list(c(dx))
+  })
+}
+
+###########################################################################
+### Theoretical titration curve for a diprotic weak base analyte using a 
+### monoprotic strong acid as the titrant.
+###########################################################################
+make_titration <- function(conc.base, conc.acid, pka1, pka2, pkw, vol.base) {
+  veq1 = conc.base * vol.base/conc.acid
+  ka1 = 10^-pka1
+  ka2 = 10^-pka2
+  kw = 10^-pkw
+  kw = 10^-pkw
+  ph = seq(pkw, 1, -0.01)
+  h = 10^-ph
+  oh = kw/h
+  delta = h - oh
+  alpha1 = (ka1 * h)/(ka1 * ka2 + ka1 * h + h^2)
+  alpha2 = h^2/(ka1 * ka2 + ka1 * h + h^2)
+  volume = vol.base * 
+    (conc.base * alpha1 + 2 * conc.base * alpha2 + delta)/
+    (conc.acid - delta)
+  df = data.frame(volume, ph)
+  df <- df[df$volume > 0 & df$volume < 4 * veq1, ]
+  rownames(df) = 1:nrow(df)
+  return(df)
+}
+
+# Function to set up consistent ggplot aesthetics:
+gg_options <-  function(){
+  theme_bw(base_size = 16)+theme(
+    plot.title = element_text(hjust = 0.5),
+    panel.grid = element_blank(),
+    strip.background = element_blank(),
+    panel.background =  element_blank(),
+    legend.background =  element_blank(),
+    legend.box.background = element_blank(),
+    legend.key = element_blank())} 
