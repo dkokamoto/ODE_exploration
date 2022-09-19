@@ -29,7 +29,7 @@
 
 exp_decay_ode <-function(t, state, parameters) {
   with(as.list(c(state, parameters)),{
-    dx <- - z * x 
+    dx <-  z * x 
     list(c(dx))
   })
 }
