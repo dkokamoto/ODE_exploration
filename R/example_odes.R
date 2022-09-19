@@ -73,3 +73,43 @@ seir_ode <-function(t, state, parameters) {
     list(c(dS, dE, dI, dR))
   })
 }
+
+###########################################################################
+### SEIR model without fishing
+###########################################################################
+
+# This model characterizes changes in susceptible, exposed, infected, 
+# and resistant/recovered individuals over time as a function of baseline
+# mortality rate (note that one can convert this into annual surival by 
+# exp(- z * t)) where t = the time in a year relative to the scale of z 
+
+
+### parameters to be defined in `parameters`
+# z = instantaneous natural mortality (per individual, per unit time)
+# beta = instantaneous rate of infection (per infected, per susceptible, per unit time)
+# k = instantaneous rate of transition from exposed to infected
+# r = instantaneous rate of recruitment into susceptible
+# delta = instantaneous death rate of infected over and above natural/fisheries 
+# gamma = instantaneous rate of transition into recovered from infected 
+
+### state variables to be defined in `state`
+# S = susceptible
+# E = exposed
+# I = infected/infectious
+# R = recovered/resistant
+
+seir_nofish_ode <-function(t, state, parameters) {
+  with(as.list(c(state, parameters)),{
+    # susceptible
+    dS <- - (z + beta * I) * S  + r 
+    # exposed but not yet infectious
+    dE <- - (z + k) * E + beta * I * S 
+    # infected
+    dI <- k * E - (z + delta + gamma) * I
+    # recovered/resistant
+    dR <- gamma * I - (z) * R
+    # return the rate of change for the compartments
+    list(c(dS, dE, dI, dR))
+  })
+}
+
