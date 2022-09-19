@@ -13,7 +13,7 @@ library(RColorBrewer)
 library(deSolve)
 
 # load required functions 
-source("R/odes.R")
+source("R/example_odes.R")
 
 ### set parameters up here
 scale = 365
@@ -83,7 +83,7 @@ output <- ode(
   # supply times you're interested in solving for
   times = seq(0, maxtime,by= 1), 
   # supply the function
-  func = sei_ode, 
+  func = seir_ode, 
   # supply the parameters
   pars)
 
