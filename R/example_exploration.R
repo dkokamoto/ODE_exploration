@@ -118,7 +118,8 @@ matplot(output[,- 1],type= "l",
         lty = 1,
         lwd = 2,
         ylab = "density",
-        xlab = "time (days)")
+        xlab = "time (days)",
+        main = "Disease mort")
 
 # plot the legend so we can see whats happening
 legend(1,
@@ -173,7 +174,8 @@ matplot(output[,- 1],type= "l",
         lty = 1,
         lwd = 2,
         ylab = "density",
-        xlab = "time (days)")
+        xlab = "time (days)", 
+        main="Disease mort + immunity loss")
 
 # plot the legend so we can see whats happening
 legend(1,
@@ -228,7 +230,8 @@ matplot(output[,- 1],type= "l",
         lty = 1,
         lwd = 2,
         ylab = "density",
-        xlab = "time (days)")
+        xlab = "time (days)",
+        main="All oysters harvest f=0.1 + disease\nmort + immunity loss")
 
 # plot the legend so we can see whats happening
 legend(1,
@@ -283,7 +286,8 @@ matplot(output[,- 1],type= "l",
         lty = 1,
         lwd = 2,
         ylab = "density",
-        xlab = "time (days)")
+        xlab = "time (days)",
+        main="Healthy oysters harvest f=0.2 + disease\nmort + immunity loss")
 
 # plot the legend so we can see whats happening
 legend(1,
