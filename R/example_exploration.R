@@ -90,7 +90,7 @@ output <- ode(
 # plot the output (the first column is the time column, so remove that one)
 matplot(output[,- 1],type= "l", 
   col= brewer.pal(4,"RdYlBu"), 
-  lty = 1,
+  lty = 3,
   lwd = 2,
   ylab = "density",
   xlab = "time (days)")
