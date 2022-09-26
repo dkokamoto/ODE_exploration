@@ -52,6 +52,9 @@ exp_decay_ode <-function(t, state, parameters) {
 # r = instantaneous rate of recruitment into susceptible
 # delta = instantaneous death rate of infected over and above natural/fisheries 
 # gamma = instantaneous rate of transition into recovered from infected 
+# zeta = instantaneous rate of transition out of infected via death
+# theta = instantaneous rate of transition out of recovered into susceptible
+# f_sick = instantaneous fisheries mortality (per individual, per unit time) for sick oysters
 
 ### state variables to be defined in `state`
 # S = susceptible
@@ -62,13 +65,13 @@ exp_decay_ode <-function(t, state, parameters) {
 seir_ode <-function(t, state, parameters) {
   with(as.list(c(state, parameters)),{
     # susceptible
-    dS <- - (z + f + beta * I) * S  + r 
+    dS <- - (z + f + beta * I) * S  + r + theta * R
     # exposed but not yet infectious
     dE <- - (z + f + k) * E + beta * I * S 
     # infected
-    dI <- k * E - (z + f + delta + gamma) * I
+    dI <- k * E - (z + f_sick + delta + gamma + zeta) * I
     # recovered/resistant
-    dR <- gamma * I - (z + f) * R
+    dR <- gamma * I - (z + f) * R - theta * R
     # return the rate of change for the compartments
     list(c(dS, dE, dI, dR))
   })
