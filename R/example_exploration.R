@@ -65,7 +65,7 @@ pars =  c(z = 0.1 / scale,
           gamma = 2 / scale)
 
 # set some initial values (needs to be one for each state)
-init = c(S= 100,
+init = c(S= 10000,
          E = 0, 
          I = 1,
          R = 0)
